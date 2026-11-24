@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Design.pro{% endblock %}</title>
+    <link rel="stylesheet" href="https://jsdelivr.net">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-2">
+            {% block sidebar %}
+            <ul class="sidebar-nav">
+                <li><a href="{% url 'index' %}">Главная страница</a></li>
+                <hr>
+                {% if user.is_authenticated %}
+                    <li>Пользователь: <strong>{{ user.get_username }}</strong></li>
+                    <li><a href="{% url 'profile' %}">Личный кабинет</a></li>
+                    {% if user.is_staff %}
+                        <li><a href="/superadmin/">Панель администратора</a></li>
+                    {% endif %}
+                    <li>
+                        <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-link p-0">Выход</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Вход</a></li>
+                    <li><a href="{% url 'register' %}">Регистрация</a></li>
+                {% endif %}
+            </ul>
+            {% endblock %}
+        </div>
+        <div class="col-sm-10 mt-3">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</div>
+</body>
+</html>

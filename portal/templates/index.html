@@ -1,0 +1,36 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Дизайн-студия «Design.pro»</h1>
+<p>Добро пожаловать на портал создания и оформления интерьеров жилых помещений.</p>
+
+<div class="alert alert-info">
+    <strong>Заявок в статусе «Принято в работу»:</strong> {{ in_progress_count }}
+</div>
+
+<h3>Последние выполненные проекты</h3>
+<div class="row">
+    {% for order in done_orders %}
+        <div class="col-md-3 mb-4">
+            <div class="card h-100">
+                {% if order.design_photo %}
+                    <img src="{{ order.design_photo.url }}" class="card-img-top" alt="{{ order.title }}">
+                {% elif order.photo %}
+                    <img src="{{ order.photo.url }}" class="card-img-top" alt="{{ order.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ order.title }}</h5>
+                    <p class="card-text">
+                        <small class="text-muted">{{ order.created_at|date:"d.m.Y H:i" }}</small><br>
+                        Категория: <strong>{{ order.category.name }}</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col-12">
+            <p>Выполненных заявок пока нет.</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

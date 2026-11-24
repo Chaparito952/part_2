@@ -1,0 +1,24 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h2>Вход в личный кабинет</h2>
+
+{% if form.errors %}
+    <div class="alert alert-danger">
+        Неправильный логин или пароль. Попробуйте снова.
+    </div>
+{% endif %}
+
+<form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="id_username">Логин:</label>
+        <input type="text" name="username" id="id_username" class="form-control" style="max-width: 350px;" required>
+    </div>
+    <div class="form-group">
+        <label for="id_password">Пароль:</label>
+        <input type="password" name="password" id="id_password" class="form-control" style="max-width: 350px;" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Войти</button>
+</form>
+{% endblock %}

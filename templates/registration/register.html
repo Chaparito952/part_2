@@ -1,0 +1,28 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h2>Регистрация пользователя</h2>
+
+<form method="post" novalidate style="max-width: 450px;">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="form-group {% if field.errors %}has-error{% endif %}">
+            {% if field.field.widget.input_type == 'checkbox' %}
+                <div class="form-check">
+                    {{ field }}
+                    <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                </div>
+            {% else %}
+                <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                <input type="{{ field.field.widget.input_type|default:'text' }}"
+                       name="{{ field.html_name }}"
+                       id="{{ field.id_for_label }}"
+                       value="{{ field.value|default:'' }}"
+                       class="form-control">
+            {% endif %}
+            {{ field.errors }}
+        </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-success">Зарегистрироваться</button>
+</form>
+{% endblock %}
