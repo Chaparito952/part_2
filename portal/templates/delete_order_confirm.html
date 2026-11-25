@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h2>Подтверждение удаления</h2>
+
+<div class="alert alert-warning" style="max-width: 550px;">
+    <p>Вы действительно хотите удалить заявку <strong>«{{ order.title }}»</strong> от {{ order.created_at|date:"d.m.Y H:i" }}?</p>
+    <p class="mb-0 text-muted">Это действие нельзя будет отменить.</p>
+</div>
+
+<form method="post" style="max-width: 550px;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Да, удалить заявку</button>
+    <a href="{% url 'profile' %}" class="btn btn-secondary ml-2">Отмена</a>
+</form>
+{% endblock %}
