@@ -1,0 +1,23 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h2>Смена статуса заявки на «{{ target_status }}»</h2>
+
+<div class="alert alert-info" style="max-width: 550px;">
+    <p style="margin: 0 0 6px 0;"><strong>Заявка:</strong> {{ order.title }}</p>
+    <p style="margin: 0;"><strong>Автор:</strong> {{ order.user.username }} | <strong>Категория:</strong> {{ order.category.name }}</p>
+</div>
+
+<form method="post" enctype="multipart/form-data" novalidate style="max-width: 550px;">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="form-group {% if field.errors %}has-error{% endif %}">
+            <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+            {{ field }}
+            {{ field.errors }}
+        </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Подтвердить статус «{{ target_status }}»</button>
+    <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">Отмена</a>
+</form>
+{% endblock %}

@@ -18,10 +18,12 @@
                 <hr>
                 {% if user.is_authenticated %}
                     <li>Пользователь: <strong>{{ user.get_username }}</strong></li>
-                    <li><a href="{% url 'profile' %}">Мои заявки</a></li>
-                    <li><a href="{% url 'create_order' %}">Создать заявку</a></li>
                     {% if user.is_staff %}
-                        <li><a href="/superadmin/">Панель администратора</a></li>
+                        <li><a href="{% url 'admin_dashboard' %}">Кабинет администратора</a></li>
+                        <li><a href="/superadmin/">Django Superadmin</a></li>
+                    {% else %}
+                        <li><a href="{% url 'profile' %}">Мои заявки</a></li>
+                        <li><a href="{% url 'create_order' %}">Создать заявку</a></li>
                     {% endif %}
                     <li>
                         <form method="post" action="{% url 'logout' %}">

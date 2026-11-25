@@ -3,7 +3,7 @@ import os
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from .models import RequestOrder
+from .models import RequestOrder, Category
 
 
 class UserRegistrationForm(forms.Form):
@@ -75,3 +75,58 @@ class RequestOrderForm(forms.ModelForm):
             raise ValidationError('Размер файла превышает 2 МБ.')
 
         return photo
+
+class CompleteOrderForm(forms.ModelForm):
+    class Meta:
+        model = RequestOrder
+        fields = ['design_photo']
+        labels = {
+            'design_photo': 'Изображение созданного дизайна (jpg, jpeg, png, bmp, до 2 МБ)',
+        }
+        widgets = {
+            'design_photo': forms.FileInput(attrs={'class': 'form-control-file'}),
+        }
+
+    def clean_design_photo(self):
+        photo = self.cleaned_data.get('design_photo')
+        if not photo:
+            raise ValidationError('Для перевода в статус «Выполнено» необходимо прикрепить изображение дизайна.')
+
+        ext = os.path.splitext(photo.name).lower()
+        if ext not in ['.jpg', '.jpeg', '.png', '.bmp']:
+            raise ValidationError('Недопустимый формат файла. Разрешены только: jpg, jpeg, png, bmp.')
+
+        if photo.size > 2 * 1024 * 1024:
+            raise ValidationError('Размер файла превышает 2 МБ.')
+
+        return photo
+
+
+class InProgressOrderForm(forms.ModelForm):
+    class Meta:
+        model = RequestOrder
+        fields = ['comment']
+        labels = {
+            'comment': 'Комментарий администратора (обязательно)',
+        }
+        widgets = {
+            'comment': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+        }
+
+    def clean_comment(self):
+        comment = self.cleaned_data.get('comment', '').strip()
+        if not comment:
+            raise ValidationError('Укажите комментарий при переводе заявки в статус «Принято в работу».')
+        return comment
+
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ['name']
+        labels = {
+            'name': 'Название новой категории',
+        }
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Например: 3D-дизайн'}),
+        }

@@ -1,0 +1,114 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h2>Панель управления администратора</h2>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}success{% endif %}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<!-- Блок управления категориями -->
+<h3>Управление категориями заявок</h3>
+<form method="post" action="{% url 'add_category' %}" class="form-inline">
+    {% csrf_token %}
+    {{ category_form.name }}
+    <button type="submit" class="btn btn-primary">Добавить категорию</button>
+</form>
+
+<div class="table-responsive" style="max-width: 600px; margin-bottom: 35px;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Название категории</th>
+                <th style="width: 140px;">Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cat in categories %}
+            <tr>
+                <td><strong>{{ cat.name }}</strong></td>
+                <td>
+                    <form method="post" action="{% url 'delete_category' cat.pk %}"
+                          style="background: none; padding: 0; border: none; box-shadow: none;"
+                          onsubmit="return confirm('Удалить категорию «{{ cat.name }}» и ВСЕ связанные с ней заявки?');">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2" class="text-muted">Категорий пока нет.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Блок управления заявками -->
+<h3>Все заявки пользователей</h3>
+{% if orders %}
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Дата и время</th>
+                    <th>Пользователь</th>
+                    <th>Название</th>
+                    <th>Категория</th>
+                    <th>План / фото</th>
+                    <th>Статус</th>
+                    <th>Смена статуса</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.created_at|date:"d.m.Y H:i" }}</td>
+                    <td>{{ order.user.username }}</td>
+                    <td>
+                        <strong>{{ order.title }}</strong><br>
+                        <span class="text-muted">{{ order.description }}</span>
+                    </td>
+                    <td>{{ order.category.name }}</td>
+                    <td>
+                        {% if order.photo %}
+                            <a href="{{ order.photo.url }}" target="_blank">Открыть план</a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if order.status == 'new' %}
+                            <span class="badge badge-primary">Новая</span>
+                        {% elif order.status == 'in_progress' %}
+                            <span class="badge badge-warning">Принято в работу</span>
+                            {% if order.comment %}
+                                <div class="text-muted" style="margin-top: 4px;">Комментарий: {{ order.comment }}</div>
+                            {% endif %}
+                        {% elif order.status == 'done' %}
+                            <span class="badge badge-success">Выполнено</span>
+                            {% if order.design_photo %}
+                                <div style="margin-top: 4px;"><a href="{{ order.design_photo.url }}" target="_blank">Готовый дизайн</a></div>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if order.status == 'new' %}
+                            <a href="{% url 'set_order_in_progress' order.pk %}" class="btn btn-sm btn-secondary" style="margin-left: 0; margin-bottom: 5px; display: block;">В работу</a>
+                            <a href="{% url 'set_order_done' order.pk %}" class="btn btn-sm btn-success" style="display: block;">Выполнено</a>
+                        {% else %}
+                            <span class="text-muted">Статус зафиксирован</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <p>Заявок пока нет.</p>
+{% endif %}
+{% endblock %}
