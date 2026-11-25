@@ -77,7 +77,11 @@
                     <td>{{ order.category.name }}</td>
                     <td>
                         {% if order.photo %}
-                            <a href="{{ order.photo.url }}" target="_blank">Открыть план</a>
+                            <a href="{{ order.photo.url }}" target="_blank" title="Нажмите, чтобы открыть в полном размере">
+                                <img src="{{ order.photo.url }}" alt="План помещения" class="table-thumb">
+                            </a>
+                        {% else %}
+                            <span class="text-muted">Нет фото</span>
                         {% endif %}
                     </td>
                     <td>
@@ -89,10 +93,14 @@
                                 <div class="text-muted" style="margin-top: 4px;">Комментарий: {{ order.comment }}</div>
                             {% endif %}
                         {% elif order.status == 'done' %}
-                            <span class="badge badge-success">Выполнено</span>
-                            {% if order.design_photo %}
-                                <div style="margin-top: 4px;"><a href="{{ order.design_photo.url }}" target="_blank">Готовый дизайн</a></div>
-                            {% endif %}
+                            <div class="status-row">
+                                <span class="badge badge-success">Выполнено</span>
+                                {% if order.design_photo %}
+                                    <a href="{{ order.design_photo.url }}" target="_blank" title="Открыть готовый дизайн">
+                                        <img src="{{ order.design_photo.url }}" alt="Готовый дизайн" class="table-thumb">
+                                    </a>
+                                {% endif %}
+                            </div>
                         {% endif %}
                     </td>
                     <td>

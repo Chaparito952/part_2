@@ -35,10 +35,11 @@ def register(request):
 
 @login_required
 def profile(request):
-    # Получаем все заявки текущего пользователя (сортировка от новых к старым задана в Meta модели)
+    if request.user.is_staff:
+        return redirect('admin_dashboard')
+
     orders = RequestOrder.objects.filter(user=request.user)
 
-    # Фильтрация по статусу (если передан GET-параметр ?status=...)
     status_filter = request.GET.get('status', '')
     if status_filter in ['new', 'in_progress', 'done']:
         orders = orders.filter(status=status_filter)
@@ -87,9 +88,6 @@ def delete_order(request, pk):
 def is_admin(user):
     return user.is_authenticated and user.is_staff
 
-def profile(request):
-    if request.user.is_staff:
-        return redirect('admin_dashboard')
 
 @user_passes_test(is_admin, login_url='login')
 def admin_dashboard(request):

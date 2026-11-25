@@ -92,7 +92,7 @@ class CompleteOrderForm(forms.ModelForm):
         if not photo:
             raise ValidationError('Для перевода в статус «Выполнено» необходимо прикрепить изображение дизайна.')
 
-        ext = os.path.splitext(photo.name).lower()
+        ext = os.path.splitext(photo.name)[1].lower()
         if ext not in ['.jpg', '.jpeg', '.png', '.bmp']:
             raise ValidationError('Недопустимый формат файла. Разрешены только: jpg, jpeg, png, bmp.')
 
