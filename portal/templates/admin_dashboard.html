@@ -32,12 +32,7 @@
             <tr>
                 <td><strong>{{ cat.name }}</strong></td>
                 <td>
-                    <form method="post" action="{% url 'delete_category' cat.pk %}"
-                          style="background: none; padding: 0; border: none; box-shadow: none;"
-                          onsubmit="return confirm('Удалить категорию «{{ cat.name }}» и ВСЕ связанные с ней заявки?');">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm btn-outline-danger">Удалить</button>
-                    </form>
+                    <a href="{% url 'delete_category' cat.pk %}" class="btn btn-sm btn-outline-danger">Удалить</a>
                 </td>
             </tr>
             {% empty %}

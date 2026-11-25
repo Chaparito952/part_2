@@ -1,0 +1,18 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h2>Подтверждение удаления категории</h2>
+
+<div class="alert alert-warning" style="max-width: 550px;">
+    <p>Вы действительно хотите удалить категорию <strong>«{{ category.name }}»</strong>?</p>
+    <p class="mb-0 text-muted">
+        Внимание: вместе с категорией будут безвозвратно удалены все заявки этой категории (сейчас их: <strong>{{ category.requestorder_set.count }}</strong>).
+    </p>
+</div>
+
+<form method="post" style="max-width: 550px;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Да, удалить категорию</button>
+    <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">Отмена</a>
+</form>
+{% endblock %}

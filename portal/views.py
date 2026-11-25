@@ -4,7 +4,17 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from .models import RequestOrder, Category
-from .forms import UserRegistrationForm, RequestOrderForm, CompleteOrderForm, InProgressOrderForm, CategoryForm
+from .forms import (
+    UserRegistrationForm,
+    RequestOrderForm,
+    CompleteOrderForm,
+    InProgressOrderForm,
+    CategoryForm,
+)
+
+
+def is_admin(user):
+    return user.is_authenticated and user.is_staff
 
 
 def index(request):
@@ -39,7 +49,6 @@ def profile(request):
         return redirect('admin_dashboard')
 
     orders = RequestOrder.objects.filter(user=request.user)
-
     status_filter = request.GET.get('status', '')
     if status_filter in ['new', 'in_progress', 'done']:
         orders = orders.filter(status=status_filter)
@@ -53,12 +62,11 @@ def profile(request):
 @login_required
 def create_order(request):
     if request.method == 'POST':
-        # Обязательно передаём request.FILES для загрузки изображения
         form = RequestOrderForm(request.POST, request.FILES)
         if form.is_valid():
             order = form.save(commit=False)
             order.user = request.user
-            order.status = 'new'  # Автоматически получает статус «Новая»
+            order.status = 'new'
             order.save()
             messages.success(request, 'Заявка успешно создана!')
             return redirect('profile')
@@ -70,10 +78,8 @@ def create_order(request):
 
 @login_required
 def delete_order(request, pk):
-    # Ищем заявку строго среди заявок текущего пользователя
     order = get_object_or_404(RequestOrder, pk=pk, user=request.user)
 
-    # Запрещаем удаление, если статус уже изменён администратором
     if order.status != 'new':
         messages.error(request, 'Нельзя удалить заявку, которая уже принята в работу или выполнена.')
         return redirect('profile')
@@ -84,9 +90,6 @@ def delete_order(request, pk):
         return redirect('profile')
 
     return render(request, 'delete_order_confirm.html', {'order': order})
-
-def is_admin(user):
-    return user.is_authenticated and user.is_staff
 
 
 @user_passes_test(is_admin, login_url='login')
@@ -106,7 +109,6 @@ def admin_dashboard(request):
 def set_order_in_progress(request, pk):
     order = get_object_or_404(RequestOrder, pk=pk)
 
-    # По ТЗ: смена статуса с «Принято в работу» или «Выполнено» невозможна
     if order.status != 'new':
         messages.error(request, 'Сменить статус можно только у заявки со статусом «Новая».')
         return redirect('admin_dashboard')
@@ -133,7 +135,6 @@ def set_order_in_progress(request, pk):
 def set_order_done(request, pk):
     order = get_object_or_404(RequestOrder, pk=pk)
 
-    # По ТЗ: смена статуса с «Принято в работу» или «Выполнено» невозможна
     if order.status != 'new':
         messages.error(request, 'Сменить статус можно только у заявки со статусом «Новая».')
         return redirect('admin_dashboard')
@@ -171,7 +172,8 @@ def delete_category(request, pk):
     category = get_object_or_404(Category, pk=pk)
     if request.method == 'POST':
         category_name = category.name
-        # При удалении категории автоматически удаляются все заявки этой категории (on_delete=models.CASCADE)
         category.delete()
         messages.success(request, f'Категория «{category_name}» и все связанные с ней заявки удалены.')
-    return redirect('admin_dashboard')
+        return redirect('admin_dashboard')
+
+    return render(request, 'delete_category_confirm.html', {'category': category})
