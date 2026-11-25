@@ -1,4 +1,5 @@
 import re
+import os
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -38,3 +39,38 @@ class UserRegistrationForm(forms.Form):
         if password and password_confirm and password != password_confirm:
             self.add_error('password_confirm', 'Введенные пароли не совпадают.')
         return cleaned_data
+
+class RequestOrderForm(forms.ModelForm):
+    class Meta:
+        model = RequestOrder
+        fields = ['title', 'description', 'category', 'photo']
+        labels = {
+            'title': 'Название заявки',
+            'description': 'Описание',
+            'category': 'Категория',
+            'photo': 'Фото помещения или его план (jpg, jpeg, png, bmp, до 2 МБ)',
+        }
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'category': forms.Select(attrs={'class': 'form-control'}),
+            'photo': forms.FileInput(attrs={'class': 'form-control-file'}),
+        }
+
+    def clean_photo(self):
+        photo = self.cleaned_data.get('photo')
+        if not photo:
+            raise ValidationError('Необходимо прикрепить фото помещения или его план.')
+
+        # 1. Проверка расширения файла
+        ext = os.path.splitext(photo.name)[1].lower()
+        allowed_extensions = ['.jpg', '.jpeg', '.png', '.bmp']
+        if ext not in allowed_extensions:
+            raise ValidationError('Недопустимый формат файла. Разрешены только: jpg, jpeg, png, bmp.')
+
+        # 2. Проверка размера файла (максимум 2 МБ = 2 * 1024 * 1024 байт)
+        max_size = 2 * 1024 * 1024
+        if photo.size > max_size:
+            raise ValidationError('Размер файла превышает 2 МБ.')
+
+        return photo

@@ -18,14 +18,15 @@
                 <hr>
                 {% if user.is_authenticated %}
                     <li>Пользователь: <strong>{{ user.get_username }}</strong></li>
-                    <li><a href="{% url 'profile' %}">Личный кабинет</a></li>
+                    <li><a href="{% url 'profile' %}">Мои заявки</a></li>
+                    <li><a href="{% url 'create_order' %}">Создать заявку</a></li>
                     {% if user.is_staff %}
                         <li><a href="/superadmin/">Панель администратора</a></li>
                     {% endif %}
                     <li>
-                        <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                        <form method="post" action="{% url 'logout' %}">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-link p-0">Выход</button>
+                            <button type="submit" class="btn-link">Выход</button>
                         </form>
                     </li>
                 {% else %}
