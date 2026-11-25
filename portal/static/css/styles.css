@@ -1,38 +1,30 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    background-color: #f4f6f9;
+    color: #2c3e50;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+}
+
+/* Сетка страницы (меню слева, контент справа) */
 .container-fluid > .row {
     display: flex;
     flex-wrap: nowrap;
 }
 
-.col-sm-2 {
-    width: 220px;
-    flex-shrink: 0;
-    background-color: #ffffff;
-    border-right: 1px solid #dddddd;
-    min-height: 100vh;
-    padding: 20px;
-}
-
-.col-sm-10 {
-    flex-grow: 1;
-    padding: 30px;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f9fafb;
-    color: #333333;
-    margin: 0;
-    padding: 0;
-}
-
 /* Боковое меню */
 .col-sm-2 {
+    width: 240px;
+    flex-shrink: 0;
     background-color: #ffffff;
-    border-right: 1px solid #dddddd;
+    border-right: 1px solid #e2e8f0;
     min-height: 100vh;
-    padding: 20px;
-    position: relative;
-    z-index: 10;
+    padding: 25px 18px;
 }
 
 .sidebar-nav {
@@ -41,119 +33,403 @@ body {
     list-style: none;
 }
 
+.sidebar-nav::before {
+    content: "Design.pro";
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #2563eb;
+}
+
 .sidebar-nav li {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
 }
 
 .sidebar-nav a {
     display: block;
-    color: #0056b3;
+    color: #4a5568;
     text-decoration: none;
-    padding: 6px 8px;
-    border-radius: 4px;
+    padding: 9px 12px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.2s ease;
 }
 
 .sidebar-nav a:hover {
-    background-color: #f0f4f8;
-    text-decoration: none;
+    background-color: #ebf4ff;
+    color: #2563eb;
 }
 
-/* Отдельно для формы выхода, чтобы она не перекрывала ссылки */
+.sidebar-nav hr {
+    border: none;
+    border-top: 1px solid #e2e8f0;
+    margin: 14px 0;
+}
+
+/* Кнопка выхода в боковом меню */
 .sidebar-nav form {
     background: transparent !important;
     padding: 0 !important;
     border: none !important;
-    margin: 0;
+    box-shadow: none !important;
+    margin-top: 12px;
     display: block;
-    width: 100%;
 }
 
 .sidebar-nav .btn-link {
     display: block;
     width: 100%;
-    text-align: left;
-    color: #dc3545;
-    padding: 6px 8px;
-    border-radius: 4px;
-    text-decoration: none;
-    background: none;
-    border: none;
+    text-align: center;
+    color: #dc2626;
+    background-color: #ffffff;
+    border: 1px solid #fca5a5;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.92rem;
     cursor: pointer;
-    font-size: 1rem;
+    transition: all 0.2s ease;
 }
 
 .sidebar-nav .btn-link:hover {
-    background-color: #fff5f5;
-    color: #a71d2a;
-    text-decoration: none;
+    background-color: #dc2626;
+    border-color: #dc2626;
+    color: #ffffff;
 }
 
-/* Основной контент */
+/* Основная область контента */
 .col-sm-10 {
-    padding: 30px !important;
+    flex-grow: 1;
+    padding: 35px 45px;
+    max-width: calc(100% - 240px);
 }
 
 h1, h2, h3 {
-    color: #222222;
+    color: #1a202c;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 18px;
+}
+
+/* Шапка раздела (заголовок + кнопка справа) */
+.d-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.d-flex h2 {
+    margin-bottom: 0;
+}
+
+/* Единый стиль для ВСЕХ кнопок */
+.btn {
+    display: inline-block;
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 500;
+    line-height: 1.4;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    padding: 9px 18px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+/* Основная синяя кнопка (+ Создать заявку, Войти, Отправить) */
+.btn-primary {
+    background-color: #2563eb;
+    border-color: #2563eb;
+    color: #ffffff !important;
+    box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+}
+
+.btn-primary:hover {
+    background-color: #1d4ed8;
+    border-color: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
+}
+
+/* Зелёная кнопка (Зарегистрироваться) */
+.btn-success {
+    background-color: #16a34a;
+    border-color: #16a34a;
+    color: #ffffff !important;
+}
+
+.btn-success:hover {
+    background-color: #15803d;
+}
+
+/* Второстепенная серая кнопка (Отмена, Сбросить) */
+.btn-secondary,
+.btn-outline-secondary {
+    background-color: #ffffff;
+    border-color: #cbd5e1;
+    color: #475569 !important;
+    margin-left: 8px;
+}
+
+.btn-secondary:hover,
+.btn-outline-secondary:hover {
+    background-color: #f1f5f9;
+    color: #1e293b !important;
+}
+
+/* Красная кнопка (Удалить) */
+.btn-danger {
+    background-color: #dc2626;
+    border-color: #dc2626;
+    color: #ffffff !important;
+}
+
+.btn-danger:hover {
+    background-color: #b91c1c;
+}
+
+.btn-outline-danger {
+    background-color: #fff5f5;
+    border-color: #fca5a5;
+    color: #dc2626 !important;
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc2626;
+    border-color: #dc2626;
+    color: #ffffff !important;
+}
+
+.btn-sm {
+    padding: 5px 12px;
+    font-size: 0.84rem;
+    border-radius: 6px;
+}
+
+/* Панель фильтрации */
+.form-inline {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #ffffff;
+    padding: 14px 20px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    margin-bottom: 22px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.form-inline label {
+    margin: 0;
+    color: #334155;
+}
+
+.form-inline select.form-control {
+    width: auto;
+    min-width: 190px;
+}
+
+/* Таблица заявок */
+.table-responsive {
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.table thead th {
+    background-color: #f8fafc;
+    border-bottom: 2px solid #e2e8f0;
+    color: #475569;
+    font-weight: 600;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 14px 18px;
+}
+
+.table tbody td {
+    padding: 14px 18px;
+    border-top: 1px solid #f1f5f9;
+    font-size: 0.94rem;
+    vertical-align: middle;
+}
+
+.table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Бейджи статусов */
+.badge {
+    display: inline-block;
+    padding: 5px 11px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.badge-primary {
+    background-color: #dbeafe;
+    color: #1d4ed8;
+}
+
+.badge-warning {
+    background-color: #fef3c7;
+    color: #b45309;
+}
+
+.badge-success {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+/* Обычные формы (вход, регистрация, создание заявки) */
+form:not(.form-inline) {
+    background-color: #ffffff;
+    padding: 26px 30px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.form-group {
     margin-bottom: 16px;
 }
 
-/* Блок со счётчиком заявок */
-.alert-info {
-    background-color: #eef5fc;
-    border: 1px solid #b8daff;
-    color: #004085;
-    border-radius: 6px;
-    padding: 12px 16px;
-    margin-bottom: 24px;
+.form-group label {
+    display: block;
+    font-weight: 500;
+    color: #334155;
+    margin-bottom: 6px;
 }
 
-/* Карточки проектов */
+.form-control {
+    width: 100%;
+    padding: 9px 12px;
+    font-size: 0.95rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #1e293b;
+}
+
+.form-control:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    outline: none;
+}
+
+.form-control-file {
+    width: 100%;
+    padding: 10px;
+    background-color: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 6px;
+}
+
+/* Уведомления */
+.alert {
+    padding: 14px 18px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+}
+
+.alert-info {
+    background-color: #eff6ff;
+    border-color: #bfdbfe;
+    color: #1e40af;
+}
+
+.alert-success {
+    background-color: #f0fdf4;
+    border-color: #bbf7d0;
+    color: #166534;
+}
+
+.alert-warning {
+    background-color: #fffbeb;
+    border-color: #fde68a;
+    color: #92400e;
+}
+
+.alert-danger {
+    background-color: #fef2f2;
+    border-color: #fecaca;
+    color: #991b1b;
+}
+
+/* Сетка карточек на главной */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.col-md-3 {
+    width: calc(25% - 15px);
+}
+
 .card {
     background-color: #ffffff;
-    border: 1px solid #dddddd;
-    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .card-img-top {
+    width: 100%;
     height: 180px;
     object-fit: cover;
-    border-bottom: 1px solid #dddddd;
+    display: block;
 }
 
 .card-body {
     padding: 15px;
 }
 
-/* Формы */
-form {
-    background-color: #ffffff;
-    padding: 20px;
-    border: 1px solid #dddddd;
-    border-radius: 6px;
-}
-
-.sidebar-nav form {
-    background: transparent;
-    padding: 0;
-    border: none;
-}
-
-.form-control {
-    border: 1px solid #cccccc;
-    border-radius: 4px;
+.card-title {
+    font-size: 1.05rem;
+    margin-bottom: 6px;
 }
 
 /* Ошибки валидации */
 .errorlist {
-    color: #dc3545;
+    color: #dc2626;
     list-style: none;
     padding-left: 0;
-    margin-top: 4px;
-    font-size: 0.9em;
+    margin-top: 5px;
+    margin-bottom: 0;
+    font-size: 0.85rem;
+    font-weight: 500;
 }
 
-.has-error input {
-    border: 2px solid #dc3545 !important;
-    background-color: #fff5f5;
+.has-error input,
+.has-error textarea,
+.has-error select {
+    border: 2px solid #dc2626 !important;
+    background-color: #fef2f2;
+}
+
+.text-muted {
+    color: #64748b;
+    font-size: 0.85rem;
 }
