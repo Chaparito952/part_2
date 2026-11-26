@@ -11,7 +11,6 @@
     {% endfor %}
 {% endif %}
 
-<!-- Блок управления категориями -->
 <h3>Управление категориями заявок</h3>
 <form method="post" action="{% url 'add_category' %}" class="form-inline">
     {% csrf_token %}
@@ -44,7 +43,6 @@
     </table>
 </div>
 
-<!-- Блок управления заявками -->
 <h3>Все заявки пользователей</h3>
 {% if orders %}
     <div class="table-responsive">

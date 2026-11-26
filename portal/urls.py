@@ -8,7 +8,6 @@ urlpatterns = [
     path('order/create/', views.create_order, name='create_order'),
     path('order/<int:pk>/delete/', views.delete_order, name='delete_order'),
 
-    # Разделы администратора
     path('manage/', views.admin_dashboard, name='admin_dashboard'),
     path('manage/order/<int:pk>/in-progress/', views.set_order_in_progress, name='set_order_in_progress'),
     path('manage/order/<int:pk>/done/', views.set_order_done, name='set_order_done'),

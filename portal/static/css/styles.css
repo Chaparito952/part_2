@@ -11,13 +11,11 @@ body {
     line-height: 1.5;
 }
 
-/* Сетка страницы (меню слева, контент справа) */
 .container-fluid > .row {
     display: flex;
     flex-wrap: nowrap;
 }
 
-/* Боковое меню */
 .col-sm-2 {
     width: 240px;
     flex-shrink: 0;
@@ -70,7 +68,6 @@ body {
     margin: 14px 0;
 }
 
-/* Кнопка выхода в боковом меню */
 .sidebar-nav form {
     background: transparent !important;
     padding: 0 !important;
@@ -101,7 +98,6 @@ body {
     color: #ffffff;
 }
 
-/* Основная область контента */
 .col-sm-10 {
     flex-grow: 1;
     padding: 35px 45px;
@@ -115,7 +111,6 @@ h1, h2, h3 {
     margin-bottom: 18px;
 }
 
-/* Шапка раздела (заголовок + кнопка справа) */
 .d-flex {
     display: flex;
     justify-content: space-between;
@@ -127,7 +122,6 @@ h1, h2, h3 {
     margin-bottom: 0;
 }
 
-/* Единый стиль для ВСЕХ кнопок */
 .btn {
     display: inline-block;
     font-family: inherit;
@@ -144,7 +138,6 @@ h1, h2, h3 {
     transition: all 0.2s ease;
 }
 
-/* Основная синяя кнопка (+ Создать заявку, Войти, Отправить) */
 .btn-primary {
     background-color: #2563eb;
     border-color: #2563eb;
@@ -159,7 +152,6 @@ h1, h2, h3 {
     box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
 }
 
-/* Зелёная кнопка (Зарегистрироваться) */
 .btn-success {
     background-color: #16a34a;
     border-color: #16a34a;
@@ -170,7 +162,6 @@ h1, h2, h3 {
     background-color: #15803d;
 }
 
-/* Второстепенная серая кнопка (Отмена, Сбросить) */
 .btn-secondary,
 .btn-outline-secondary {
     background-color: #ffffff;
@@ -185,7 +176,6 @@ h1, h2, h3 {
     color: #1e293b !important;
 }
 
-/* Красная кнопка (Удалить) */
 .btn-danger {
     background-color: #dc2626;
     border-color: #dc2626;
@@ -214,7 +204,6 @@ h1, h2, h3 {
     border-radius: 6px;
 }
 
-/* Панель фильтрации */
 .form-inline {
     display: flex;
     align-items: center;
@@ -237,7 +226,6 @@ h1, h2, h3 {
     min-width: 190px;
 }
 
-/* Таблица заявок */
 .table-responsive {
     width: 100%;
     background-color: #ffffff;
@@ -275,7 +263,6 @@ h1, h2, h3 {
     background-color: #f8fafc;
 }
 
-/* Бейджи статусов */
 .badge {
     display: inline-block;
     padding: 5px 11px;
@@ -300,7 +287,6 @@ h1, h2, h3 {
     color: #15803d;
 }
 
-/* Обычные формы (вход, регистрация, создание заявки) */
 form:not(.form-inline) {
     background-color: #ffffff;
     padding: 26px 30px;
@@ -344,7 +330,7 @@ form:not(.form-inline) {
     border-radius: 6px;
 }
 
-/* Уведомления */
+
 .alert {
     padding: 14px 18px;
     border-radius: 8px;
@@ -376,7 +362,6 @@ form:not(.form-inline) {
     color: #991b1b;
 }
 
-/* Сетка карточек на главной */
 .row {
     display: flex;
     flex-wrap: wrap;
@@ -411,7 +396,6 @@ form:not(.form-inline) {
     margin-bottom: 6px;
 }
 
-/* Ошибки валидации */
 .errorlist {
     color: #dc2626;
     list-style: none;
@@ -449,7 +433,6 @@ form:not(.form-inline) {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-/* Размещение статуса и фото в одну линию */
 .status-row {
     display: flex;
     align-items: center;
